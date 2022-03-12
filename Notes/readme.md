@@ -11,3 +11,8 @@ To use the Mapbox Styles API, edit the URL in the Leaflet tilelayer()method, as 
 5. Remove the .png from the URL.
 6. Remove the id attribute and the map style reference.
 7. The code for the tileLayer() should look like the following:
+
+## Additional Useful Leaflet Functions
+- [marker() function](https://leafletjs.com/index.html#marker) 
+- [circle() function](https://leafletjs.com/index.html#circle) 
+- [circleMaker() function](https://leafletjs.com/index.html#circlemarker)
