@@ -34,8 +34,15 @@ L.control.layers(baseMaps).addTo(map);
 
 let torontoHoods = "https://raw.githubusercontent.com/awar2170/Mapping_Earthquakes/main/static/js/torontoNeighborhoods.json"
 
-// Retrieve the earthquake GeoJSON data.
-d3.json("https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_week.geojson").then(function(data) {
+// Create a style for the lines.
+let myStyle = {
+    color: "#ffffa1",
+    weight: 2
+}
+
+// Grabbing our GeoJSON data.
+d3.json(torontoHoods).then(function(data) {
+    console.log(data);
   // Creating a GeoJSON layer with the retrieved data.
   L.geoJSON(data).addTo(map);
 });
