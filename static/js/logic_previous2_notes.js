@@ -1,36 +1,34 @@
-// Check that code is working 
-console.log("working");
-
-// Tile Layer background 
-let streets = L.tileLayer('https://api.mapbox.com/styles/v1/mapbox/streets-v11/tiles/{z}/{x}/{y}?access_token={accessToken}', {
+// Create the street view title layer that will be the default background of our map 
+let light = L.tileLayer('https://api.mapbox.com/styles/v1/mapbox/streets-v10/tiles/{z}/{x}/{y}?access_token={accessToken}', {
 attribution: 'Map data © <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery (c) <a href="https://www.mapbox.com/">Mapbox</a>',
     maxZoom: 18,
     accessToken: API_KEY
 });
 
-// Tile Layer Background 
-let satelliteStreets = L.tileLayer('https://api.mapbox.com/styles/v1/mapbox/satellite-streets-v11/tiles/{z}/{x}/{y}?access_token={accessToken}', {
+// Create the Dark View tile layer that will be an option for our map 
+let dark = L.tileLayer('https://api.mapbox.com/styles/v1/mapbox/dark-v10/tiles/{z}/{x}/{y}?access_token={accessToken}', {
 attribution: 'Map data © <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery (c) <a href="https://www.mapbox.com/">Mapbox</a>',
     maxZoom: 18,
     accessToken: API_KEY
 });
 
-// Base Map 
+// Base layer that holds both maps 
 let baseMaps = {
-    "Streets": streets, 
-    "Satellite Streets": satelliteStreets
-};
+    Street: light,
+    Dark: dark
+  };
 
-// Create the map obj with default center and zoom 
-let map = L.map('mapid', {
-    center: [43.7,-79.3], 
-    zoom: 11,
-    layers: [satelliteStreets]
+// Default zoom and focus 
+let map = L.map("mapid", {
+    center: [44.0, -80.0], 
+    zoom: 2,
+    layers: [light]
 });
 
-// Pass our map layers into our layer control and add the layer control to the map 
+// Pass our map layers into our layer control and add the layer control onto the map 
 L.control.layers(baseMaps).addTo(map);
 
+let airportData = "https://raw.githubusercontent.com/awar2170/Mapping_Earthquakes/main/static/js/majorAirports.json"
 
 let torontoData = "https://raw.githubusercontent.com/awar2170/Mapping_Earthquakes/main/static/js/torontoRoutes.json"
 
@@ -51,3 +49,4 @@ d3.json(torontoData).then(function(data) {
     }
   }).addTo(map);
 });
+
