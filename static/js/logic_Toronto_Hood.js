@@ -20,7 +20,7 @@ let baseMaps = {
     "Streets": streets, 
     "Satellite Streets": satelliteStreets
 };
-
+ 
 // Create the map obj with default center and zoom 
 let map = L.map('mapid', {
     center: [39.5, -98.5], 

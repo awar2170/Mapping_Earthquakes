@@ -108,7 +108,7 @@ L.geoJSON(data, {
     // Add the earthquakes layer to our map 
     earthquakes.addTo(map);
 })
-
+ 
 // Leaflet legends starting code 
 // Create a legend control object.
 let legend = L.control({
