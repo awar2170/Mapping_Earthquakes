@@ -21,15 +21,6 @@ let baseMaps = {
     "Satellite Streets": satelliteStreets
 };
 
-// Create the earthquake layer for our map.
-let earthquakes = new L.layerGroup();
-
-// We define an object that contains the overlays.
-// This overlay will be visible all the time.
-let overlays = {
-    Earthquakes: earthquakes
-  };
-
 // Create the map obj with default center and zoom 
 let map = L.map('mapid', {
     center: [39.5, -98.5], 
@@ -37,9 +28,8 @@ let map = L.map('mapid', {
     layers: [streets]
 });
 
-// Then we add a control to the map that will allow the user to change
-// which layers are visible.
-L.control.layers(baseMaps, overlays).addTo(map);
+// Pass our map layers into our layer control and add the layer control to the map 
+L.control.layers(baseMaps).addTo(map);
 
 // Retrieve the earthquake GeoJSON data.
 d3.json("https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_week.geojson").then(function(data) {
@@ -103,45 +93,5 @@ L.geoJSON(data, {
     onEachFeature: function(feature, layer) {
     layer.bindPopup("Magnitude: " + feature.properties.mag + "<br>Location: " + feature.properties.place);
   }
-}).addTo(earthquakes);
-
-    // Add the earthquakes layer to our map 
-    earthquakes.addTo(map);
+}).addTo(map);
 })
-
-// Leaflet legends starting code 
-// Create a legend control object.
-let legend = L.control({
-    position: "bottomright"
-  }); 
-
-// Then add all the details for the legend.
-legend.onAdd = function() {
-    let div = L.DomUtil.create("div", "info legend"); 
-    const magnitudes = [0, 1, 2, 3, 4, 5];
-    const colors = [
-    "#98ee00",
-    "#d4ee00",
-    "#eecc00",
-    "#ee9c00",
-    "#ea822c",
-    "#ea2c2c"
-    ];
-// Looping through our intervals to generate a label with a colored square for each interval.
-for (var i = 0; i < magnitudes.length; i++) {
-    console.log(colors[i]);
-    div.innerHTML +=
-      "<i style='background: " + colors[i] + "'></i> " +
-      magnitudes[i] + (magnitudes[i + 1] ? "&ndash;" + magnitudes[i + 1] + "<br>" : "+");
- }
-  return div;
-};
-
-legend.addTo(map);
-
-// What is happening above: 
-    // Let's review what's happening in this for loop:
-
-    //     After we iterate through the magnitudes, we'll add the color and text to the div element using div.innerHTML +=.
-    //     For each iteration, we'll add a color from the colors array by styling the background of an <i> tag with color options.
-    //     Next, we'll add the interval between earthquake magnitudes for our colors with the following code: magnitudes[i] + (magnitudes[i + 1] ? "&ndash;" + magnitudes[i + 1] + "<br>" : "+").
